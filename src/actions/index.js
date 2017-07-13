@@ -1,30 +1,24 @@
 import firebase from '../firebase';
 
+const DEFAULT_USER_ID = '1000';
+
 export const addMessage = (msg) => ({
     type: 'ADD_MESSAGE',
     ...msg
 });
 
-export const sendMessage = (text) => {
+export const sendMessage = (formData) => {
     return function (dispatch) {
-        let msg = {
-                text: text,
-                time: Date.now(),
-                // author: {
-                //     name: user.name,
-                //     avatar: user.avatar
-                // }
-            };
+        console.log(formData);
+        // const newMsgRef = firebase.database()
+        //                           .ref('profile')
+        //                           .push();
+        // formData.id = DEFAULT_USER_ID;
+        // newMsgRef.set(formData);
+        const profileRef = firebase.database().ref('profile/' + DEFAULT_USER_ID);
+        profileRef.set(formData);
 
-        console.log(msg);
-
-        const newMsgRef = firebase.database()
-                                  .ref('form')
-                                  .push();
-        msg.id = newMsgRef.key;
-        newMsgRef.set(msg);
-
-        dispatch(addMessage(msg));
+        dispatch(addMessage(formData));
     };
 };
 
@@ -43,11 +37,12 @@ export const fetchMessages = () => {
 		dispatch(startFetchingMessages());
 
 		firebase.database()
-			.ref('form')
+			.ref('profile/' + DEFAULT_USER_ID)
 			.on('value', (snapshot) => {
 				// gets around Redux panicking about actions in reducers
 				setTimeout(() => {
-					const messages = snapshot.val() || [];
+                    const messages = snapshot.val() || [];
+                    console.log(messages);
 
 					dispatch(receiveMessages(messages))
 				}, 0);
@@ -57,8 +52,8 @@ export const fetchMessages = () => {
 
 export const receiveMessages = (messages) => {
     return function (dispatch) {
-        Object.values(messages).forEach(msg => dispatch(addMessage(msg)));
-
+        // Object.values(messages).forEach(msg => dispatch(addMessage(msg)));
+        dispatch(addMessage(messages));
         dispatch(receivedMessages());
     }
 }

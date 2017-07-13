@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import { sendMessage } from '../actions'
+import { sendMessage, fetchMessages } from '../actions'
 import { Form, Separator,InputField } from 'react-native-form-generator';
+
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -11,45 +12,32 @@ class UserProfile extends React.Component {
       formData:{}
     }
   }
+  
 
   componentDidMount() {
     // redux call fetch
+    this.props.dispatch(fetchMessages());
+    console.log("Get profile props: ", this.props.profiles);
   }
 
   onSave = () => {
-    this.props.dispatch(sendMessage("test"));
+    this.props.dispatch(sendMessage(this.state.formData));
+    alert("Changes have been saved !");
   }
 
   handleFormChange(formData){
-    /*
-    formData will contain all the values of the form,
-    in this example.
-
-    formData = {
-    first_name:"",
-    last_name:"",
-    gender: '',
-    birthday: Date,
-    has_accepted_conditions: bool
-    }
-    */
-
     this.setState({formData:formData})
     console.log(this.state.formData);
     this.props.onFormChange && this.props.onFormChange(formData);
-  }
-  handleFormFocus(e, component){
-    //console.log(e, component);
   }
 
   render() {
     return (
     <ScrollView style={{paddingLeft:10,paddingRight:10, height:200}}>
       <Form
-        ref='registrationForm'
-        onFocus={this.handleFormFocus.bind(this)}
+        ref='userProfileForm'
         onChange={this.handleFormChange.bind(this)}
-        label="Personal Information">
+        label="User Profile">
         <Separator />
         <InputField
           ref='firstName'
@@ -91,7 +79,7 @@ class UserProfile extends React.Component {
           <Text style={styles.button}  onPress={this.onSave}>Save</Text>
         </TouchableOpacity> 
       </Form>
-
+      
     </ScrollView>
     );
   }

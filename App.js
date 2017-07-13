@@ -1,5 +1,4 @@
 import React from 'react';
-// import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { Provider } from 'react-redux'; 
 
 // import * as firebase from 'firebase';
@@ -8,7 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from './src/reducers';
 
-import UserProfile from './src/components/UserProfile';
+import Profile from './src/containers/Profile';
 
 const store = createStore(
   rootReducer,
@@ -21,7 +20,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <UserProfile />
+        <Profile />
       </Provider>
     );
   }
