@@ -8,7 +8,7 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      formData: {}
+      formData: this.props.data
     }
   }
 
@@ -40,13 +40,13 @@ class UserProfile extends React.Component {
           ref='firstName'
           label='First Name'
           placeholder='First Name'
-          value={savedProfile.firstName || ''}
+          value={savedProfile.firstName}
           />
         <InputField
           ref='lastName'
           label='Last Name'
           placeholder='Last Name'
-          value={savedProfile.lastName || ''}
+          value={savedProfile.lastName}
           />
         <Separator />
 
@@ -54,19 +54,19 @@ class UserProfile extends React.Component {
           ref='company'
           label='Company'
           placeholder='Company'
-          value={savedProfile.company|| ''}
+          value={savedProfile.company}
           />
         <InputField
           ref='department'
           label='Department'
           placeholder='Department'
-          value={savedProfile.department || ''}
+          value={savedProfile.department}
           />
         <InputField
           ref='position'
           label='Position'
           placeholder='Position'
-          value={savedProfile.position || ''}
+          value={savedProfile.position}
           />
 
         <Separator />
@@ -75,7 +75,7 @@ class UserProfile extends React.Component {
           ref='email'
           label='Email'
           placeholder='Email'
-          value={savedProfile.email || ''}
+          value={savedProfile.email}
           />
         <View style={{flex: 1, alignItems:'center'}}>
           <TouchableOpacity style={styles.button} onPress={this.onSave}>

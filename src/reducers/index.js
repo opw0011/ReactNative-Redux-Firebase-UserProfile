@@ -13,12 +13,12 @@ const profile = (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_PROFILE':
             return {
-                firstName: action.firstName,
-                lastName: action.lastName,
-                company: action.company,
-                department: action.department,
-                position: action.position,
-                email: action.email
+                firstName: action.firstName || '',
+                lastName: action.lastName || '',
+                company: action.company || '',
+                department: action.department || '',
+                position: action.position || '',
+                email: action.email || ''
             }
         default:
             return state
