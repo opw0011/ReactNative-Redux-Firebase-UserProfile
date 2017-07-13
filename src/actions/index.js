@@ -3,7 +3,7 @@ import firebase from '../firebase';
 const DEFAULT_USER_ID = '1000';
 
 export const addMessage = (msg) => ({
-    type: 'ADD_MESSAGE',
+    type: 'UPDATE_PROFILE',
     ...msg
 });
 
@@ -32,7 +32,6 @@ export const fetchMessages = () => {
 		firebase.database()
 			.ref('profile/' + DEFAULT_USER_ID)
 			.on('value', (snapshot) => {
-				// gets around Redux panicking about actions in reducers
 				setTimeout(() => {
                     const messages = snapshot.val() || [];
                     console.log("Firebase message:", messages);
@@ -45,8 +44,7 @@ export const fetchMessages = () => {
 
 export const receiveMessages = (messages) => {
     return function (dispatch) {
-        // Object.values(messages).forEach(msg => dispatch(addMessage(msg)));
-        console.log("receive data");
+        // console.log("receive data");
         dispatch(addMessage(messages));
         dispatch(finishFetchingMessages());
     }

@@ -11,7 +11,7 @@ const initialState = {
 
 const profile = (state = initialState, action) => {
     switch (action.type) {
-        case 'ADD_MESSAGE':
+        case 'UPDATE_PROFILE':
             return {
                 firstName: action.firstName,
                 lastName: action.lastName,

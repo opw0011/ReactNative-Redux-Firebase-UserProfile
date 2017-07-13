@@ -1,23 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { sendMessage, fetchMessages } from '../actions'
 import { Form, Separator, InputField } from 'react-native-form-generator';
-
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-    // this.props.dispatch(fetchMessages());
     this.state = {
       formData: {}
     }
   }
-  
 
   componentDidMount() {
-    // redux call fetch
-    console.log("Receive***", this.props.data);
     let savedProfile = this.props.data;
     console.log("mounted component: ", savedProfile);
     this.refs.userProfileForm.refs.firstName.setValue(savedProfile.firstName || '');
@@ -27,19 +22,6 @@ class UserProfile extends React.Component {
     this.refs.userProfileForm.refs.position.setValue(savedProfile.position || '');
     this.refs.userProfileForm.refs.email.setValue(savedProfile.email || '');
   }
-
-  // componentDidUpdate(prevProps, prevState){ // after Component update
-  //   if(prevProps.data !== this.props.data && typeof this.refs.userProfileForm !== "undefined") {
-  //     let savedProfile = this.props.data;
-  //     console.log("update component: ", savedProfile);
-  //     this.refs.userProfileForm.refs.firstName.setValue(savedProfile.firstName || '');
-  //     this.refs.userProfileForm.refs.lastName.setValue(savedProfile.lastName || '');
-  //     this.refs.userProfileForm.refs.company.setValue(savedProfile.company || '');
-  //     this.refs.userProfileForm.refs.department.setValue(savedProfile.department || '');
-  //     this.refs.userProfileForm.refs.position.setValue(savedProfile.position || '');
-  //     this.refs.userProfileForm.refs.email.setValue(savedProfile.email || '');
-  //   }
-  // } 
 
   onSave = () => {
     this.props.dispatch(sendMessage(this.state.formData));
@@ -52,17 +34,9 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    console.log("Receive***in render", this.props);
-    // if (this.props.isFetching) {
-    //     return (
-    //         <View style={{flex: 1, paddingTop: 20}}>
-    //             <ActivityIndicator />
-    //         </View>
-    //     );
-    // }
-    
+    console.log("Receive***in render", this.props);   
     return (
-    <ScrollView style={{paddingLeft:10,paddingRight:10, height:200}}>
+    <ScrollView style={styles.container}>
       <Form
         ref='userProfileForm'
         onChange={this.handleFormChange.bind(this)}
@@ -103,10 +77,11 @@ class UserProfile extends React.Component {
           label='Email'
           placeholder='Email'
           />
-        
-        <TouchableOpacity>
-          <Text style={styles.button}  onPress={this.onSave}>Save</Text>
-        </TouchableOpacity> 
+        <View style={{flex: 1, alignItems:'center'}}>
+          <TouchableOpacity style={styles.button} onPress={this.onSave}>
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity> 
+        </View>
       </Form>
       
     </ScrollView>
@@ -116,25 +91,27 @@ class UserProfile extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    paddingLeft: 20,
+    paddingRight: 20, 
+    height: 200,
     flex: 1,
-    // backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    backgroundColor: '#EE1E'
   }, 
   button: {
-    backgroundColor: '#03a9f4',
-    color: 'white',
-    height: 30,
-    lineHeight: 30,
-    marginTop: 10,
-    textAlign: 'center',
+    backgroundColor: '#68a0cf',
+    borderRadius: 10,
+    height: 60,
+    marginTop: 30,
+    width: 180,
+    flexDirection:'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1
   },
-  input: {
-    borderColor: 'black',
-    borderWidth: 1,
-    height: 37,
-    width: 250
+  buttonText: {
+    color: 'white',
+    fontSize: 22,
+    textAlign: 'center',
   }
 });
 
