@@ -7,6 +7,7 @@ export const addMessage = (msg) => ({
     ...msg
 });
 
+// save to firebase and update profile
 export const sendMessage = (formData) => {
     return function (dispatch) {
         console.log(formData);
@@ -16,6 +17,13 @@ export const sendMessage = (formData) => {
         dispatch(addMessage(formData));
     };
 };
+
+// update profile only
+export const updateMessage = (formData) => {
+    return function (dispatch) {
+        dispatch(addMessage(formData));
+    }
+}
 
 export const startFetchingMessages = () => ({
 	type: 'START_FETCHING'

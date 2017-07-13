@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import { sendMessage, fetchMessages } from '../actions'
+import { sendMessage, updateMessage } from '../actions'
 import { Form, Separator, InputField } from 'react-native-form-generator';
 
 class UserProfile extends React.Component {
@@ -23,7 +23,10 @@ class UserProfile extends React.Component {
   }
 
   handleFormChange(formData){
-    this.setState({formData:formData})
+    const updatedState = Object.assign({}, this.state.formData, formData);
+    console.log("update", updatedState);
+    this.setState({formData: updatedState});
+    console.log("FD State", formData, "->", this.state.formData);
     this.props.onFormChange && this.props.onFormChange(formData);
   }
 
