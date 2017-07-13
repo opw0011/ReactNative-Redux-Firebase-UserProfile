@@ -15,12 +15,6 @@ class UserProfile extends React.Component {
   componentDidMount() {
     let savedProfile = this.props.data;
     console.log("mounted component: ", savedProfile);
-    this.refs.userProfileForm.refs.firstName.setValue(savedProfile.firstName || '');
-    this.refs.userProfileForm.refs.lastName.setValue(savedProfile.lastName || '');
-    this.refs.userProfileForm.refs.company.setValue(savedProfile.company || '');
-    this.refs.userProfileForm.refs.department.setValue(savedProfile.department || '');
-    this.refs.userProfileForm.refs.position.setValue(savedProfile.position || '');
-    this.refs.userProfileForm.refs.email.setValue(savedProfile.email || '');
   }
 
   onSave = () => {
@@ -34,7 +28,7 @@ class UserProfile extends React.Component {
   }
 
   render() {
-    console.log("Receive***in render", this.props);   
+    let savedProfile = this.props.data;
     return (
     <ScrollView style={styles.container}>
       <Form
@@ -46,11 +40,13 @@ class UserProfile extends React.Component {
           ref='firstName'
           label='First Name'
           placeholder='First Name'
+          value={savedProfile.firstName || ''}
           />
         <InputField
           ref='lastName'
           label='Last Name'
           placeholder='Last Name'
+          value={savedProfile.lastName || ''}
           />
         <Separator />
 
@@ -58,16 +54,19 @@ class UserProfile extends React.Component {
           ref='company'
           label='Company'
           placeholder='Company'
+          value={savedProfile.company|| ''}
           />
         <InputField
           ref='department'
           label='Department'
           placeholder='Department'
+          value={savedProfile.department || ''}
           />
         <InputField
           ref='position'
           label='Position'
           placeholder='Position'
+          value={savedProfile.position || ''}
           />
 
         <Separator />
@@ -76,6 +75,7 @@ class UserProfile extends React.Component {
           ref='email'
           label='Email'
           placeholder='Email'
+          value={savedProfile.email || ''}
           />
         <View style={{flex: 1, alignItems:'center'}}>
           <TouchableOpacity style={styles.button} onPress={this.onSave}>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingRight: 20, 
     height: 200,
     flex: 1,
-    backgroundColor: '#EE1E'
+    backgroundColor: '#EEE'
   }, 
   button: {
     backgroundColor: '#68a0cf',
