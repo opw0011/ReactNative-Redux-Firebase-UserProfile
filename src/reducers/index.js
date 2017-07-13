@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 
 const initialState = {
-    isFetching: false,
     firstName: '',
     lastName: '',
     company: '',
@@ -26,9 +25,21 @@ const profile = (state = initialState, action) => {
     }
 }
 
+const isFetching = (state = true, action) => {
+    console.log("isFetchgin reducer", action);
+    switch (action.type) {
+        case 'START_FETCHING':
+            return true;
+        case 'FINISH_FETCHING':
+            return false;
+        default:
+            return state
+    }
+}
+
 
 const rootReducer = combineReducers({
-    profile,
+    profile, isFetching
 });
 
 export default rootReducer;

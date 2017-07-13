@@ -10,11 +10,6 @@ export const addMessage = (msg) => ({
 export const sendMessage = (formData) => {
     return function (dispatch) {
         console.log(formData);
-        // const newMsgRef = firebase.database()
-        //                           .ref('profile')
-        //                           .push();
-        // formData.id = DEFAULT_USER_ID;
-        // newMsgRef.set(formData);
         const profileRef = firebase.database().ref('profile/' + DEFAULT_USER_ID);
         profileRef.set(formData);
 
@@ -22,14 +17,12 @@ export const sendMessage = (formData) => {
     };
 };
 
-
 export const startFetchingMessages = () => ({
-	type: 'START_FETCHING_MESSAGES'
+	type: 'START_FETCHING'
 });
 
-export const receivedMessages = () => ({
-    type: 'RECEIVED_MESSAGES',
-    receivedAt: Date.now()
+export const finishFetchingMessages = () => ({
+	type: 'FINISH_FETCHING'
 });
 
 export const fetchMessages = () => {
@@ -42,9 +35,9 @@ export const fetchMessages = () => {
 				// gets around Redux panicking about actions in reducers
 				setTimeout(() => {
                     const messages = snapshot.val() || [];
-                    console.log(messages);
+                    console.log("Firebase message:", messages);
 
-					dispatch(receiveMessages(messages))
+                    dispatch(receiveMessages(messages))
 				}, 0);
 			});
 	}
@@ -53,7 +46,8 @@ export const fetchMessages = () => {
 export const receiveMessages = (messages) => {
     return function (dispatch) {
         // Object.values(messages).forEach(msg => dispatch(addMessage(msg)));
+        console.log("receive data");
         dispatch(addMessage(messages));
-        dispatch(receivedMessages());
+        dispatch(finishFetchingMessages());
     }
 }
