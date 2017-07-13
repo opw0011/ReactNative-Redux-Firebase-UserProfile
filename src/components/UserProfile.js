@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { sendMessage, fetchMessages } from '../actions'
-import { Form, Separator,InputField } from 'react-native-form-generator';
+import { Form, Separator, InputField } from 'react-native-form-generator';
 
 
 class UserProfile extends React.Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(fetchMessages());
+    // this.props.dispatch(fetchMessages());
     this.state = {
       formData: {}
     }
@@ -18,24 +18,28 @@ class UserProfile extends React.Component {
   componentDidMount() {
     // redux call fetch
     console.log("Receive***", this.props.data);
-    
-    
-    // this.refs.userProfileForm.refs.firstName.setValue("fff");
-    
+    let savedProfile = this.props.data;
+    console.log("mounted component: ", savedProfile);
+    this.refs.userProfileForm.refs.firstName.setValue(savedProfile.firstName || '');
+    this.refs.userProfileForm.refs.lastName.setValue(savedProfile.lastName || '');
+    this.refs.userProfileForm.refs.company.setValue(savedProfile.company || '');
+    this.refs.userProfileForm.refs.department.setValue(savedProfile.department || '');
+    this.refs.userProfileForm.refs.position.setValue(savedProfile.position || '');
+    this.refs.userProfileForm.refs.email.setValue(savedProfile.email || '');
   }
 
-  componentDidUpdate(prevProps, prevState){ // after Component update
-    if(prevProps.data !== this.props.data && typeof this.refs.userProfileForm !== "undefined") {
-      let savedProfile = this.props.data;
-      console.log("update component: ", savedProfile);
-      this.refs.userProfileForm.refs.firstName.setValue(savedProfile.firstName || '');
-      this.refs.userProfileForm.refs.lastName.setValue(savedProfile.lastName || '');
-      this.refs.userProfileForm.refs.company.setValue(savedProfile.company || '');
-      this.refs.userProfileForm.refs.department.setValue(savedProfile.department || '');
-      this.refs.userProfileForm.refs.position.setValue(savedProfile.position || '');
-      this.refs.userProfileForm.refs.email.setValue(savedProfile.email || '');
-    }
-  } 
+  // componentDidUpdate(prevProps, prevState){ // after Component update
+  //   if(prevProps.data !== this.props.data && typeof this.refs.userProfileForm !== "undefined") {
+  //     let savedProfile = this.props.data;
+  //     console.log("update component: ", savedProfile);
+  //     this.refs.userProfileForm.refs.firstName.setValue(savedProfile.firstName || '');
+  //     this.refs.userProfileForm.refs.lastName.setValue(savedProfile.lastName || '');
+  //     this.refs.userProfileForm.refs.company.setValue(savedProfile.company || '');
+  //     this.refs.userProfileForm.refs.department.setValue(savedProfile.department || '');
+  //     this.refs.userProfileForm.refs.position.setValue(savedProfile.position || '');
+  //     this.refs.userProfileForm.refs.email.setValue(savedProfile.email || '');
+  //   }
+  // } 
 
   onSave = () => {
     this.props.dispatch(sendMessage(this.state.formData));
@@ -49,13 +53,13 @@ class UserProfile extends React.Component {
 
   render() {
     console.log("Receive***in render", this.props);
-    if (this.props.isFetching) {
-        return (
-            <View style={{flex: 1, paddingTop: 20}}>
-                <ActivityIndicator />
-            </View>
-        );
-    }
+    // if (this.props.isFetching) {
+    //     return (
+    //         <View style={{flex: 1, paddingTop: 20}}>
+    //             <ActivityIndicator />
+    //         </View>
+    //     );
+    // }
     
     return (
     <ScrollView style={{paddingLeft:10,paddingRight:10, height:200}}>
